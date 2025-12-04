@@ -1,0 +1,74 @@
+@use "sass:list";
+@use "sass:map";
+@use "utils/functions" as f;
+@use "variables/breakpoints" as b;
+@use "variables/css-properties" as p;
+
+@mixin mw($breakpoint: sm) {
+    @if map.has-key(b.$breakpoints, $breakpoint) {
+        @media (min-width: f.rem(map.get(b.$breakpoints, $breakpoint))) {
+            @content;
+        }
+    } @else {
+        @warn "Breakpoint '#{$breakpoint}' not found in $breakpoints map.";
+    }
+}
+
+@mixin rm($property, $sizes...) {
+    $css-property: if(
+        map.has-key(p.$css-properties, $property),
+        map.get(p.$css-properties, $property),
+        $property
+    );
+
+    $breakpoint-keys: ("sm", "md", "lg", "xl");
+
+    $figma-values: map.values(b.$figma-bps);
+    $bp-values: map.values(b.$breakpoints);
+
+    @for $i from 1 through list.length($sizes) {
+        $size: list.nth($sizes, $i);
+
+        @if $size != null {
+            $figma-breakpoint: list.nth($figma-values, $i);
+            $bp-breakpoint: list.nth($bp-values, $i);
+
+            @if $i == 1 {
+                #{$css-property}: f.calc-adaptive-rm($size, $figma-breakpoint, $bp-breakpoint);
+            } @else {
+                $breakpoint-key: list.nth($breakpoint-keys, $i - 1);
+                @include mw($breakpoint-key) {
+                    #{$css-property}: f.calc-adaptive-rm($size, $figma-breakpoint, $bp-breakpoint);
+                }
+            }
+        }
+    }
+}
+
+@mixin px($property, $sizes...) {
+    $css-property: if(
+        map.has-key(p.$css-properties, $property),
+        map.get(p.$css-properties, $property),
+        $property
+    );
+    $breakpoint-keys: ("sm", "md", "lg", "xl");
+    $figma-values: map.values(b.$figma-bps);
+    $bp-values: map.values(b.$breakpoints);
+
+    @for $i from 1 through length($sizes) {
+        $size: list.nth($sizes, $i);
+        @if $size != null {
+            $figma-breakpoint: list.nth($figma-values, $i);
+            $bp-breakpoint: list.nth($bp-values, $i);
+
+            @if $i == 1 {
+                #{$css-property}: f.calc-adaptive-px($size, $figma-breakpoint, $bp-breakpoint);
+            } @else {
+                $breakpoint-key: list.nth($breakpoint-keys, $i - 1);
+                @include mw($breakpoint-key) {
+                    #{$css-property}: f.calc-adaptive-px($size, $figma-breakpoint, $bp-breakpoint);
+                }
+            }
+        }
+    }
+}

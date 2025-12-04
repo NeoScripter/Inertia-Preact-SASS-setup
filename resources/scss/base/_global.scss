@@ -1,0 +1,17 @@
+@use "core" as u;
+
+:root {
+    --root-base: 1;
+    --test: 1rem;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    overflow-x: clip;
+}
+
+button {
+    color: inherit;
+    cursor: pointer;
+}
