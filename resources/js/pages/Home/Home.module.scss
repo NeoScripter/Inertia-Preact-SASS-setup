@@ -1,6 +1,9 @@
 @use "core" as u;
 
 .wrapper {
-    @include u.rm(font-size, 10, 60, 140, 300);
+    @include u.rm(text, 10, 60, 140, 300);
     color: u.clr('foreground', 'strong');
+    @include u.rm(max-w, 300);
+    margin-inline: auto;
+
 }
