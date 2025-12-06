@@ -13,6 +13,8 @@ class AppearanceController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return Inertia::render('admin/Appearance');
+        return Inertia::render('admin/Appearance', [
+            'adminLayout' => true,
+        ]);
     }
 }

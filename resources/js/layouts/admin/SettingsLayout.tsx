@@ -20,6 +20,11 @@ const sidebarNavItems = [
         href: '/settings/appearance',
         icon: null,
     },
+    {
+        title: 'Language',
+        href: '/settings/locale',
+        icon: null,
+    },
 ];
 
 type SettingsLayoutProps = {

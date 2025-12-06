@@ -6,6 +6,7 @@ import { FC } from "preact/compat";
 import Monogram from "./monogram";
 import { router, usePage } from "@inertiajs/react";
 import { User } from "@/lib/types";
+import useTrans from "@/hooks/useTrans";
 
 const AccountMenu: FC<{ id: string; name: string; show: boolean }> = ({
     id,
@@ -21,6 +22,7 @@ const AccountMenu: FC<{ id: string; name: string; show: boolean }> = ({
 
         router.post(route("logout"));
     };
+    const t = useTrans();
 
     return (
         <div
@@ -48,14 +50,14 @@ const AccountMenu: FC<{ id: string; name: string; show: boolean }> = ({
                     onClick={hide}
                     url="/settings/profile"
                     icon={Settings}
-                    label="Settings"
+                    label={t("Settings")}
                     collapses={false}
                 />
                 <SidebarLink
                     onClick={handleLogOut}
                     url="/logout"
                     icon={LogOut}
-                    label="Log out"
+                    label={t("Log out")}
                     collapses={false}
                 />
             </ul>

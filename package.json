@@ -7,6 +7,9 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "prettier": "^3.4.2",
+        "prettier-plugin-organize-imports": "^4.1.0",
+        "prettier-plugin-tailwindcss": "^0.6.11",
         "@tailwindcss/vite": "^4.0.0",
         "@types/node": "^24.10.1",
         "axios": "^1.11.0",

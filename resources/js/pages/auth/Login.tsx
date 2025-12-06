@@ -4,12 +4,15 @@ import Input from "@/components/auth/form/input";
 import InputError from "@/components/auth/form/input-error";
 import Label from "@/components/auth/form/label";
 import PasswordInput from "@/components/auth/form/password-input";
+import useTrans from "@/hooks/useTrans";
 import AuthLayout from "@/layouts/auth/AuthLayout";
 import { Head, useForm } from "@inertiajs/react";
 import { LoaderCircle } from "lucide-preact";
 import { JSX } from "preact/jsx-runtime";
 
 const Login = () => {
+    const t = useTrans();
+
     const form = useForm({
         email: "test@example.com",
         password: "password",
@@ -24,15 +27,15 @@ const Login = () => {
 
     return (
         <AuthLayout
-            title="Log in to your account"
-            description="Enter your email and password below to log in"
+            title={t("Log in to your account")}
+            description={t("Enter your email and password below to log in")}
         >
             <Head title="Вход" />
             <form class="flex flex-col gap-6" onSubmit={submit}>
                 <div class="grid gap-6">
                     {/* Email */}
                     <div class="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+                        <Label htmlFor="email">{t('Email address')}</Label>
                         <Input
                             id="email"
                             type="email"
@@ -55,7 +58,7 @@ const Login = () => {
                     {/* Password */}
                     <div class="grid gap-2">
                         <div class="flex items-center">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">{t('Password')}</Label>
                         </div>
                         <PasswordInput
                             id="password"
@@ -69,7 +72,7 @@ const Login = () => {
                                     (e.target as HTMLInputElement).value,
                                 )
                             }
-                            placeholder="Password"
+                            placeholder={t("Password")}
                         />
                         <InputError message={form.errors.password || ""} />
                     </div>
@@ -85,7 +88,7 @@ const Login = () => {
                             }
                             tabIndex={3}
                         />
-                        <Label htmlFor="remember">Remember me</Label>
+                        <Label htmlFor="remember">{t('Remember me')}</Label>
                     </div>
 
                     {/* Submit */}
@@ -98,7 +101,7 @@ const Login = () => {
                         {form.processing && (
                             <LoaderCircle class="h-4 w-4 animate-spin" />
                         )}
-                        Log in
+                        {t('Log in')}
                     </Button>
                 </div>
             </form>

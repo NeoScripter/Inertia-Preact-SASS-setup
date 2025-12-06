@@ -18,7 +18,9 @@ class AuthController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('auth/Login');
+        return Inertia::render('auth/Login', [
+            'adminLayout' => true,
+        ]);
     }
 
     /**

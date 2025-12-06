@@ -10,7 +10,9 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return Inertia::render('admin/Profile');
+        return Inertia::render('admin/Profile', [
+            'adminLayout' => true,
+        ]);
     }
     /**
      * Update the user's profile settings.
