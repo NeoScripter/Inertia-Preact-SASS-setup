@@ -56,16 +56,18 @@
 }
 
 @mixin px($property, $sizes...) {
-    $css-property: if(
-        map.has-key(p.$css-properties, $property),
-        map.get(p.$css-properties, $property),
-        $property
-    );
+    @if not map.has-key(p.$css-properties, $property) {
+        @error "Unknown CSS property `#{$property}`. "
+                 + "It is not in p.$css-properties and is not a valid CSS identifier.";
+    }
+
+    $css-property: map.get(p.$css-properties, $property);
+
     $breakpoint-keys: ("sm", "md", "lg", "xl");
     $figma-values: map.values(b.$figma-bps);
     $bp-values: map.values(b.$breakpoints);
 
-    @for $i from 1 through length($sizes) {
+    @for $i from 1 through list.length($sizes) {
         $size: list.nth($sizes, $i);
         @if $size != null {
             $figma-breakpoint: list.nth($figma-values, $i);

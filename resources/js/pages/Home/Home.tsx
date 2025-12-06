@@ -1,13 +1,15 @@
 import { FC } from "preact/compat";
-import css from './Home.module.scss';
-import '../../../scss/app.scss';
+import css from "./Home.module.scss";
+import AppLayout from "@/layouts/user/AppLayout/AppLayout";
 
 const Home: FC<{ className?: string }> = ({ className }) => {
     return (
-        <div class={css.wrapper}>
-            Hello world
-            <p class="test">Test</p>
-        </div>
+        <AppLayout>
+            <div class={css.wrapper}>
+                Hello world
+                <p class={ css.test }>Test</p>
+            </div>
+        </AppLayout>
     );
 };
 
