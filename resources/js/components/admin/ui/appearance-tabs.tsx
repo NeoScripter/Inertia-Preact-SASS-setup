@@ -1,17 +1,33 @@
 import { appearance } from '@/signals/appearance';
 import { cn } from '@/utils/cn';
+import { usePage } from '@inertiajs/react';
 import { LucideIcon, Monitor, Moon, Sun } from 'lucide-preact';
 import { HTMLAttributes } from 'preact';
 
-export default function AppearanceTabs({ className = '', ...props }: HTMLAttributes<HTMLDivElement>) {
+export default function AppearanceTabs({
+    className = '',
+    ...props
+}: HTMLAttributes<HTMLDivElement>) {
+    const { locale } = usePage<{ locale: 'en' | 'ru' }>().props;
+
     const tabs: { value: string; icon: LucideIcon; label: string }[] = [
-        { value: 'light', icon: Sun, label: 'Light' },
-        { value: 'dark', icon: Moon, label: 'Dark' },
-        { value: 'system', icon: Monitor, label: 'System' },
+        { value: 'light', icon: Sun, label: locale === 'en' ? 'Light' : 'Светлая' },
+        { value: 'dark', icon: Moon, label: locale === 'en' ? 'Dark' : 'Темная' },
+        {
+            value: 'system',
+            icon: Monitor,
+            label: locale === 'en' ? 'System' : 'Системная',
+        },
     ];
 
     return (
-        <div className={cn('inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800', className)} {...props}>
+        <div
+            className={cn(
+                'inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800',
+                className,
+            )}
+            {...props}
+        >
             {tabs.map(({ value, icon: Icon, label }) => (
                 <button
                     key={value}

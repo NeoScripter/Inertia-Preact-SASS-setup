@@ -1,19 +1,22 @@
-import HeadingSmall from "@/components/admin/ui/heading-small";
-import { Button } from "@/components/auth/form/button";
-import InputError from "@/components/auth/form/input-error";
-import Label from "@/components/auth/form/label";
-import PasswordInput from "@/components/auth/form/password-input";
-import AdminLayout from "@/layouts/admin/AdminLayout";
-import SettingsLayout from "@/layouts/admin/SettingsLayout";
-import { Head, useForm } from "@inertiajs/react";
-import { JSX } from "preact/jsx-runtime";
-import { toast } from "sonner";
+import HeadingSmall from '@/components/admin/ui/heading-small';
+import { Button } from '@/components/auth/form/button';
+import InputError from '@/components/auth/form/input-error';
+import Label from '@/components/auth/form/label';
+import PasswordInput from '@/components/auth/form/password-input';
+import useTrans from '@/hooks/useTrans';
+import AdminLayout from '@/layouts/admin/AdminLayout';
+import SettingsLayout from '@/layouts/admin/SettingsLayout';
+import { Head, useForm } from '@inertiajs/react';
+import { JSX } from 'preact/jsx-runtime';
+import { toast } from 'sonner';
 
 export default function Password() {
+    const t = useTrans();
+
     const form = useForm({
-        current_password: "",
-        password: "",
-        password_confirmation: "",
+        current_password: '',
+        password: '',
+        password_confirmation: '',
     });
 
     const updatePassword = async (
@@ -21,31 +24,36 @@ export default function Password() {
     ) => {
         e.preventDefault();
 
-        form.put("/settings/password", {
+        form.put('/settings/password', {
             onSuccess: () => {
-                toast("Password updated successfully");
+                toast(t('Password updated successfully'));
                 form.reset();
             },
             onError: () => {
-                toast.error("Failed to update password");
+                toast.error(t('Failed to update password'));
             },
         });
     };
 
     return (
-        <AdminLayout title="Password settings">
-            <Head title="Изменение пароля" />
+        <AdminLayout title={t('Password settings')}>
+            <Head title={t('Password settings')} />
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall
-                        title="Update password"
-                        description="Ensure your account is using a long, random password to stay secure"
+                        title={t('Update password')}
+                        description={t(
+                            'Ensure your account is using a long, random password to stay secure',
+                        )}
                     />
 
-                    <form onSubmit={updatePassword} className="space-y-6">
+                    <form
+                        onSubmit={updatePassword}
+                        className="space-y-6"
+                    >
                         <div className="grid gap-2">
                             <Label htmlFor="current_password">
-                                Current password
+                                {t('Current password')}
                             </Label>
 
                             <PasswordInput
@@ -53,13 +61,13 @@ export default function Password() {
                                 value={form.data.current_password}
                                 onInput={(e) =>
                                     form.setData(
-                                        "current_password",
+                                        'current_password',
                                         e.currentTarget.value,
                                     )
                                 }
                                 class="mt-1 block w-full"
                                 autoComplete="current-password"
-                                placeholder="Current password"
+                                placeholder={t('Current password')}
                             />
 
                             <InputError
@@ -68,38 +76,40 @@ export default function Password() {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">New password</Label>
+                            <Label htmlFor="password">
+                                {t('New password')}
+                            </Label>
 
                             <PasswordInput
                                 id="password"
                                 value={form.data.password}
                                 onInput={(e) =>
                                     form.setData(
-                                        "password",
+                                        'password',
                                         e.currentTarget.value,
                                     )
                                 }
                                 autoComplete="new-password"
-                                placeholder="New password"
+                                placeholder={t('New password')}
                             />
                             <InputError message={form.errors.password} />
                         </div>
 
                         <div className="grid gap-2">
                             <Label htmlFor="password_confirmation">
-                                Confirm password
+                                {t('Confirm password')}
                             </Label>
                             <PasswordInput
                                 id="password_confirmation"
                                 value={form.data.password_confirmation}
                                 onInput={(e) =>
                                     form.setData(
-                                        "password_confirmation",
+                                        'password_confirmation',
                                         e.currentTarget.value,
                                     )
                                 }
                                 autoComplete="new-password"
-                                placeholder="Confirm password"
+                                placeholder={t('Confirm password')}
                             />
                             <InputError
                                 message={form.errors.password_confirmation}
@@ -108,12 +118,12 @@ export default function Password() {
 
                         <div className="flex items-center gap-4">
                             <Button disabled={form.processing}>
-                                Save password
+                                {t('Save password')}
                             </Button>
 
                             {form.recentlySuccessful && (
                                 <p className="text-sm text-neutral-600">
-                                    Saved
+                                    {t('Saved')}
                                 </p>
                             )}
                         </div>

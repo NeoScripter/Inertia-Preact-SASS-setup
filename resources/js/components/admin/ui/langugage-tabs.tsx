@@ -9,8 +9,8 @@ export default function LangugageTabs({
 }: HTMLAttributes<HTMLDivElement>) {
     const { locale } = usePage<{ locale: 'en' | 'ru' }>().props;
     const tabs: { value: string; icon: LucideIcon; label: string }[] = [
-        { value: 'en', icon: Sun, label: 'English' },
-        { value: 'ru', icon: Moon, label: 'Russian' },
+        { value: 'en', icon: Sun, label: locale === 'en' ? 'English' : 'Английский' },
+        { value: 'ru', icon: Moon, label: locale === 'en' ? 'Russian' : 'Русский' },
     ];
 
     return (

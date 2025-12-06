@@ -3,6 +3,7 @@ import { Button } from "@/components/auth/form/button";
 import Input from "@/components/auth/form/input";
 import InputError from "@/components/auth/form/input-error";
 import Label from "@/components/auth/form/label";
+import useTrans from "@/hooks/useTrans";
 import AdminLayout from "@/layouts/admin/AdminLayout";
 import SettingsLayout from "@/layouts/admin/SettingsLayout";
 import { User } from "@/lib/types";
@@ -15,6 +16,8 @@ export default function Profile({ status }: { status?: string }) {
         auth: { user },
     } = usePage<{ auth: { user: User } }>().props;
 
+    const t = useTrans();
+
     const form = useForm({
         name: user?.name || "",
         email: user?.email || "",
@@ -26,28 +29,28 @@ export default function Profile({ status }: { status?: string }) {
         form.patch("/settings/profile", {
             onSuccess: () => {
                 toast.success(
-                    "Profile updated successfully",
+                    t("Profile updated successfully"),
                 );
             },
             onError: () => {
-                toast.error("Failed to update profile");
+                toast.error(t("Failed to update profile"));
             },
         });
     }
 
     return (
-        <AdminLayout title="Profile settings">
-            <Head title="Изменение данных пользователя" />
+        <AdminLayout title={t("Profile settings")}>
+            <Head title={t("Изменение данных пользователя")} />
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall
-                        title="Profile information"
-                        description="Update your name and email address"
+                        title={t("Profile information")}
+                        description={t("Update your name and email address")}
                     />
 
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="name">Name</Label>
+                            <Label htmlFor="name">{t("Name")}</Label>
 
                             <Input
                                 id="name"
@@ -55,7 +58,7 @@ export default function Profile({ status }: { status?: string }) {
                                 value={form.data.name}
                                 required
                                 autoComplete="name"
-                                placeholder="Full name"
+                                placeholder={t("Full name")}
                                 onInput={(e) =>
                                     form.setData(
                                         "name",
@@ -71,7 +74,7 @@ export default function Profile({ status }: { status?: string }) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email address</Label>
+                            <Label htmlFor="email">{t("Email address")}</Label>
 
                             <Input
                                 id="email"
@@ -80,7 +83,7 @@ export default function Profile({ status }: { status?: string }) {
                                 value={form.data.email}
                                 required
                                 autoComplete="username"
-                                placeholder="Email address"
+                                placeholder={t("Email address")}
                                 onInput={(e) =>
                                     form.setData(
                                         "email",
@@ -96,11 +99,11 @@ export default function Profile({ status }: { status?: string }) {
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <Button disabled={form.processing}>Save</Button>
+                            <Button disabled={form.processing}>{t("Save")}</Button>
 
                             {form.recentlySuccessful && (
                                 <p className="text-sm text-neutral-600">
-                                    Saved
+                                    {t("Saved")}
                                 </p>
                             )}
                         </div>

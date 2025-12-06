@@ -1,19 +1,21 @@
-import AppearanceTabs from "@/components/admin/ui/appearance-tabs";
-import HeadingSmall from "@/components/admin/ui/heading-small";
-import LangugageTabs from "@/components/admin/ui/langugage-tabs";
-import AdminLayout from "@/layouts/admin/AdminLayout";
-import SettingsLayout from "@/layouts/admin/SettingsLayout";
-import { Head } from "@inertiajs/react";
+import HeadingSmall from '@/components/admin/ui/heading-small';
+import LangugageTabs from '@/components/admin/ui/langugage-tabs';
+import useTrans from '@/hooks/useTrans';
+import AdminLayout from '@/layouts/admin/AdminLayout';
+import SettingsLayout from '@/layouts/admin/SettingsLayout';
+import { Head } from '@inertiajs/react';
 
 export default function Langugage() {
+    const t = useTrans();
+
     return (
-        <AdminLayout title="Appearance settings">
-            <Head title="Изменение темы" />
+        <AdminLayout title={t("Language")}>
+            <Head title={t("Language")} />
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall
-                        title="Appearance settings"
-                        description="Update your account's appearance settings"
+                        title={t("Language")}
+                        description={t("Change language")}
                     />
                     <LangugageTabs />
                 </div>
