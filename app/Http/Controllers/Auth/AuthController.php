@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -43,9 +44,15 @@ class AuthController extends Controller
     {
         Auth::guard('web')->logout();
 
+        $lang = Session::get('locale');
+
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        if ($lang) {
+            Session::put('locale', $lang);
+        }
 
         return redirect()->route('login')
             ->with('message', 'Logged out successfully');

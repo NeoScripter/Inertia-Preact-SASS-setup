@@ -1,16 +1,26 @@
 import { cn } from '@/utils/cn';
 import { Link, usePage } from '@inertiajs/react';
-import { LucideIcon, Moon, Sun } from 'lucide-preact';
+import { Moon, Sun } from 'lucide-preact';
 import { HTMLAttributes } from 'preact';
+import En from '@/assets/svgs/en-language.svg';
+import Ru from '@/assets/svgs/ru-language.svg';
 
 export default function LangugageTabs({
     className = '',
     ...props
 }: HTMLAttributes<HTMLDivElement>) {
     const { locale } = usePage<{ locale: 'en' | 'ru' }>().props;
-    const tabs: { value: string; icon: LucideIcon; label: string }[] = [
-        { value: 'en', icon: Sun, label: locale === 'en' ? 'English' : 'Английский' },
-        { value: 'ru', icon: Moon, label: locale === 'en' ? 'Russian' : 'Русский' },
+    const tabs: { value: string; icon: string; label: string }[] = [
+        {
+            value: 'en',
+            icon: En,
+            label: locale === 'en' ? 'English' : 'Английский',
+        },
+        {
+            value: 'ru',
+            icon: Ru,
+            label: locale === 'en' ? 'Russian' : 'Русский',
+        },
     ];
 
     return (
@@ -21,7 +31,7 @@ export default function LangugageTabs({
             )}
             {...props}
         >
-            {tabs.map(({ value, icon: Icon, label }) => (
+            {tabs.map(({ value, icon, label }) => (
                 <Link
                     as={'button'}
                     key={value}
@@ -35,7 +45,17 @@ export default function LangugageTabs({
                             : 'text-neutral-500 hover:bg-neutral-200/60 hover:text-black dark:text-neutral-400 dark:hover:bg-neutral-700/60',
                     )}
                 >
-                    <Icon className="-ml-1 h-4 w-4" />
+                    <span
+                        className="-ml-1 block h-4 w-4"
+                        aria-hidden="true"
+                    >
+                        {' '}
+                        <img
+                            src={icon}
+                            alt=""
+                            class="object-contain size-full"
+                        />
+                    </span>
                     <span className="ml-1.5 text-sm">{label}</span>
                 </Link>
             ))}
